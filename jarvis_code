@@ -1,0 +1,63 @@
+import speech_recognition as sp
+import pyttsx3 as pt
+import webbrowser as wb
+import datetime
+import pyjokes as pk
+import time 
+def sptxt():
+    recogniser=sp.Recognizer()
+    with sp.Microphone() as source:
+        print("Listening.....")
+        recogniser.adjust_for_ambient_noise(source)
+        audio=recogniser.listen(source)
+        try:
+            print("Recognising....")
+            data=recogniser.recognize_google(audio)
+            print(data)
+            return data
+        except sp.UnknownValueError:
+            print("Thanks You")        
+def txtsp(x):
+    engine=pt.init()
+    voices=engine.getProperty("voices")
+    engine.setProperty("voice",voices[0].id)
+    rate=engine.getProperty("rate")
+    engine.setProperty("rate",150)
+    engine.say(x)
+    engine.runAndWait()
+
+if __name__=="__main__":
+        print("JARVIS")
+    
+        while True:
+            data1=sptxt().lower()
+            if "your name " in data1:
+                txtsp("My name is my Laptop")
+            elif "age" in data1:
+                txtsp("I am 1 year old")
+            elif "google" in data1:
+                wb.open("https://www.google.com/")
+            elif "youtube" in data1:
+                wb.open("https://www.youtube.com/")
+            elif "linkedIn" in data1:
+                wb.open("https://www.linkedin.com/")    
+            elif "time" in data1:
+                time1=datetime.datetime.now().strftime("%I%M%p")
+                txtsp(time1)   
+            elif "jokes" in data1:
+                joke=pk.get_joke(language="en",category="neutral")
+                print(joke)
+                txtsp(joke)
+            elif "song" in data1:
+                wb.open("https://www.youtube.com/watch?v=ElZfdU54Cp8")    
+            elif "exist" in data1:
+                txtsp("Thank you")
+                break    
+            else:
+                txtsp("Not Found")
+
+        print("Thank you")
+        txtsp("Thank you")    
+
+   
+
